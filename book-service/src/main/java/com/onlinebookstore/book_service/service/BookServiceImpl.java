@@ -7,7 +7,10 @@ import com.onlinebookstore.book_service.exceptions.ResourceNotFoundException;
 import com.onlinebookstore.book_service.repository.BookRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,16 +18,19 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
+    private final DiscoveryClient discoveryClient;
 
     @Override
     public BookDto addNewBook(BookDto bookDto) {
         BookEntity entity = modelMapper.map(bookDto , BookEntity.class);
         BookEntity savedBook = bookRepository.save(entity);
-
+//        log.info( "   {}" , savedBook.getId());
+        ServiceInstance inventoryService = discoveryClient.getInstances("inventory-service").getFirst();
         return modelMapper.map(savedBook , BookDto.class);
     }
 
