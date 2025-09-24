@@ -23,14 +23,15 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
-    private final DiscoveryClient discoveryClient;
+//    private final DiscoveryClient discoveryClient;
+
 
     @Override
     public BookDto addNewBook(BookDto bookDto) {
         BookEntity entity = modelMapper.map(bookDto , BookEntity.class);
         BookEntity savedBook = bookRepository.save(entity);
 //        log.info( "   {}" , savedBook.getId());
-        ServiceInstance inventoryService = discoveryClient.getInstances("inventory-service").getFirst();
+//
         return modelMapper.map(savedBook , BookDto.class);
     }
 
