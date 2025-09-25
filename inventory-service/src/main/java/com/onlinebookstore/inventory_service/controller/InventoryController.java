@@ -2,7 +2,6 @@ package com.onlinebookstore.inventory_service.controller;
 
 import com.onlinebookstore.inventory_service.dto.InventoryDto;
 import com.onlinebookstore.inventory_service.service.InventoryService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
